@@ -7,36 +7,59 @@ use sdl2::{
 use std::collections::HashMap;
 use std::process::Command;
 
+const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+
 // Desktop notification
 fn notify(body: &str) {
     Notification::new()
         .summary("CRT-Deck")
         .appname("CRT-Deck")
         .body(body)
-        .icon("firefox")
+        .icon("steamdeck-gaming-return")
         .show()
         .expect("Failed to notify!");
 }
 
-fn steam_ascii() {
-    println!("{}", "
-      .:::...
-       :::::::..
-      ... ..:::::.
-  ^!??J??7~. .::::.
-:?YYYJJJJYYJ^ .::::.
-JYJJJJJJJJJJJ: .::::
-JYJJJJJJJJJJJ: .::::
-:?YYJJJJJJJJ^ .::::.
-  ^!??J??7~. .::::.
-      ... ..:::::.
-       :::::::..
-      .:::...
-    ");
+// CLI Welcome
+fn splash() {
+    const STEAM_DECK: &str = "
+            .:::...
+            :::::::..
+            ... ..:::::.
+        ^!??J??7~. .::::.
+        :?YYYJJJJYYJ^ .::::.
+        JYJJJJJJJJJJJ: .::::
+        JYJJJJJJJJJJJ: .::::
+        :?YYJJJJJJJJ^ .::::.
+        ^!??J??7~. .::::.
+            ... ..:::::.
+            :::::::..
+            .:::...
+    ";
+
+    println!("{}", STEAM_DECK);
+    println!("
+    CRT Deck - Desktop resolution changer v{}
+    By: r0r0
+
+    Desclaimer:
+        This app is specifically meant for switching between
+        the normal default steam deck resolution and 480p
+        this is to be used for games and apps that can work
+        in a window, along side KWin Rules.
+
+        I DO NOT take ANY responsibility, if this breaks your
+        Steam Deck. The things done in this little program
+        are pretty safe because its just calling KDE specific
+        thing todo the work.
+
+    R1 + Start : 1280x800
+    L2 + Start : 640x480
+    ", VERSION);
 }
 
 fn main() {
-    steam_ascii();
+    splash();
     // Initialize SDL
     let sdl_ctx = sdl2::init().unwrap();
     // Initialize game controller subsystem

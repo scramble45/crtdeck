@@ -3,10 +3,8 @@ use sdl2::{
     controller::{Button, GameController},
     event::Event,
     keyboard::Keycode,
-    libc::printf,
 };
 use std::collections::HashMap;
-use std::mem;
 use std::process::Command;
 
 // Desktop notification
@@ -101,20 +99,19 @@ fn main() {
                     if right_shoulder_button && start_button {
                         notify("Changing resolution to 1280x800@60");
 
-                        Command::new("ls")
-                            .arg("-l")
-                            .arg("-a")
+                        Command::new("kscreen-doctor")
+                            .arg("output.eDP.mode.800x1280@60")
                             .spawn()
-                            .expect("ls command failed to start");
+                            .expect("failed to set resolution with kscreen-doctor");
                     };
 
                     // Resolution 640x480
                     if left_shoulder_button && start_button {
                         notify("Changing resolution to 640x480@60");
-                        Command::new("ls")
-                            .arg("-alh")
+                        Command::new("kscreen-doctor")
+                            .arg("output.eDP.mode.640x480@60")
                             .spawn()
-                            .expect("ls command failed to start");
+                            .expect("failed to set resolution with kscreen-doctor");
                     };
 
                     println!(

@@ -2,7 +2,6 @@ use notify_rust::Notification;
 use sdl2::{
     controller::{Button, GameController},
     event::Event,
-    keyboard::Keycode,
 };
 use std::collections::HashMap;
 use std::process::Command;
@@ -42,16 +41,34 @@ fn splash() {
     CRT Deck - Desktop resolution changer v{}
     By: r0r0
 
-    Desclaimer:
+    ==============================================================
+
+    About:
+
         This app is specifically meant for switching between
         the normal default steam deck resolution and 480p
-        this is to be used for games and apps that can work
-        in a window, along side KWin Rules.
+        and is to be used for games and apps that can work
+        in a window, along side KWin rules (google that).
+        
+        The reason I made this app was for use with my GBS-C
+        downscaler, which needs a 480p resolution input. This
+        way I can use the 15kHz Sony PVM.
+
+        As this software is totally open source you can,
+        swap out the resolutions with whatever you want.
+
+    ==============================================================
+
+    Desclaimer:
 
         I DO NOT take ANY responsibility, if this breaks your
         Steam Deck. The things done in this little program
         are pretty safe because its just calling KDE specific
-        thing todo the work.
+        things todo the work.
+
+    ==============================================================
+    
+    Controls:
 
     R1 + Start : 1280x800
     L2 + Start : 640x480
@@ -65,26 +82,15 @@ fn main() {
     // Initialize game controller subsystem
     let controller_subsystem = sdl_ctx.game_controller().unwrap();
     let mut gamepads: HashMap<u32, GameController> = HashMap::new();
-    // Obtain SDL event pump
+    // Get SDL event pump
     let mut event_pump = sdl_ctx.event_pump().unwrap();
     // Default button combo state
     let mut buttons_vector: Vec<bool> = vec![false, false, false];
 
-    'running: loop {
+    loop {
         // Obtain polling iterator for events
         for event in event_pump.poll_iter() {
             match event {
-                Event::Quit { .. }
-                | Event::KeyDown {
-                    keycode: Some(Keycode::Escape),
-                    ..
-                } => break 'running,
-                Event::KeyDown {
-                    keycode: Some(keycode),
-                    ..
-                } => {
-                    println!("{}", keycode)
-                }
                 Event::ControllerDeviceAdded { which, .. } => {
                     println!("Device added index={}", which);
                     // When device connected open it so we receive button events
@@ -95,7 +101,7 @@ fn main() {
                     println!("Device removed index={}", which);
                     gamepads.remove(&(which as u32));
                 }
-                Event::ControllerButtonUp { which, button, .. } => {
+                Event::ControllerButtonUp { which: _, button, .. } => {
                     match button {
                         Button::RightShoulder => buttons_vector[0] = false,
                         Button::Start => buttons_vector[1] = false,

@@ -66,7 +66,7 @@ fn splash() {
     Controls:
 
     R1 + Start : 1280x800
-    L2 + Start : 640x480
+    L1 + Start : 640x480
     ", VERSION);
 }
 

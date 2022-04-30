@@ -8,7 +8,6 @@ Pull requests are welcome.
 
 As this software is totally open source you can, swap out the resolutions with whatever you want.
 
-
 ## Usage:
 ```
 chmod +x crt_deck
